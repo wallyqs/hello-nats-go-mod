@@ -5,10 +5,13 @@ import (
 
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/stan.go"
+	stand "github.com/nats-io/nats-streaming-server/server"
 )
 
 func main() {
-	nc, err := nats.Connect("demo.nats.io", nats.Name("NATS Client"))
+	stand.RunServer("test-cluster")
+
+	nc, err := nats.Connect("127.0.0.1", nats.Name("NATS Client"))
 	if err != nil {
 		log.Fatal(err)
 	}

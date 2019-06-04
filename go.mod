@@ -7,3 +7,5 @@ require (
 	github.com/nats-io/nats.go v1.8.1
 	github.com/nats-io/stan.go v0.4.5
 )
+
+replace github.com/nats-io/go-nats => github.com/nats-io/nats.go v1.8.1

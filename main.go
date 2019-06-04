@@ -11,7 +11,7 @@ import (
 func main() {
 	stand.RunServer("test-cluster")
 
-	nc, err := nats.Connect("demo.nats.io", nats.Name("NATS Client"))
+	nc, err := nats.Connect("127.0.0.1", nats.Name("NATS Client"))
 	if err != nil {
 		log.Fatal(err)
 	}

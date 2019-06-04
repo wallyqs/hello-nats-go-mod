@@ -5,16 +5,19 @@ import (
 
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/stan.go"
+	stand "github.com/nats-io/nats-streaming-server/server"
 )
 
 func main() {
-	nc, err := nats.Connect("demo.nats.io", nats.Name("NATS Client"))
+	stand.RunServer("test-cluster")
+
+	nc, err := nats.Connect("127.0.0.1", nats.Name("NATS Client"))
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Println("Connected!")
 	nc.Subscribe("hi", func(m *nats.Msg) {
-		log.Println("[Received] ", string(m.Data))
+		log.Println("[Received]", string(m.Data))
 	})
 	nc.Publish("hi", []byte("Hello NATS!"))
 
@@ -23,5 +26,8 @@ func main() {
 		log.Fatal(err)
 	}
 	sc.Publish("hi", []byte("Hello STAN!"))
+	sc.Subscribe("hi", func (m *stan.Msg){
+		log.Println("[Received]", string(m.Data))
+	}, stan.DeliverAllAvailable())
 	select {}
 }
